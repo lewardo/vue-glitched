@@ -1,0 +1,1 @@
+export { default as glitch } from './Glitched.vue';
