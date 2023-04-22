@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <glitch bg="#2E3440" fg="#D8DEE9">simple text glitching vue component</glitch>
-  <glitch id="secondary" :intensity=0.2 bg="#2E3440" fg="#8FBCBB" glitch="not the same text">because whyn't re-invent the wheel amrite?</glitch>
+  <glitch>simple text glitching vue component</glitch>
+  <glitch id="secondary" :intensity=0.4 fg="#8FBCBB" glitch="notice not the same text is glitching here">because whyn't re-invent the wheel amrite?</glitch>
   <a href="http://t.ly/qIQs">@lewardo</a>
 </template>
 
@@ -21,6 +21,9 @@
     place-items: center;
     display: grid;
     background: #2E3440;
+
+    --glitch-global-bg: #2E3440;
+    --glitch-global-fg: #D8DEE9;
   }
 
   .glitch {
