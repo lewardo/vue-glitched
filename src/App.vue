@@ -4,18 +4,18 @@
 
 <template>
   <div class="wrapper">
-    <Glitch id="glitchy" :intensity=0.2>vue3 text glitching component</Glitch>
-    <Glitch id="intense" :intensity=0.9>built with <span style="color: #41b883;">vue</span> &amp; <span style="color: #bd34fe;">vite</span></Glitch>
+    <Glitch id="glitchy">vue3 text glitching component</Glitch>
+    <Glitch id="intense" :intensity=1>built with <span style="color: #41b883;">vue</span> &amp; <span style="color: #bd34fe;">vite</span></Glitch>
     <div>
       <Glitch id="colourful" bg="#1d2021" fg="#ebdbb2" colour="#928374">simple to use, customisable, and&nbsp;</Glitch>
-      <Glitch id="disabled" :start=true text="different glitching overlay">completely open source <span style="color: #cc241d;">&lt;3</span></Glitch>
+      <Glitch id="alternate" :start=true :intensity=0.25 text="different glitching overlay">completely open source <span style="color: #cc241d;">&lt;3</span></Glitch>
     </div>
-      <a href="http://t.ly/qIQs">@lewardo</a>
+      <a href="https://github.com/lewardo/vue-glitched">@lewardo</a>
   </div>
 </template>
 
 <style>
-  :root {
+  body {
     margin: 0;
     padding: 0;
     width: 100vw;
@@ -48,11 +48,11 @@
     margin: 20px 0;
   }
 
-  #intense, #colourful, #disabled {
+  #intense, #colourful, #alternate {
     font-size: 24px;
   }
 
-  #colourful, #disabled {
+  #colourful, #alternate {
     display: inline-block;
   }
   
