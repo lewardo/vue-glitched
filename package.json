@@ -1,9 +1,6 @@
 {
   "name": "vue-glitched",
-  "files": [
-    "dist/*",
-    "src/**/*.vue"
-  ],
+  "files": ["dist"],
   "main": "./dist/vue-glitched.umd.js",
   "module": "./dist/vue-glitched.mjs",
   "exports": {
