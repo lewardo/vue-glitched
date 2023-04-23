@@ -8,6 +8,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   if(mode === 'docs') {
     return {
       plugins: [vue()],
+      base: '/vue-glitched/',
       build: {
         minify: true,
         outDir: 'docs',
