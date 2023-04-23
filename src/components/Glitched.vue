@@ -4,11 +4,19 @@
     </div>
 </template>
 <script>
+    let DOMComponentGlobalStyleObject = document.createElement('style');
+
+    DOMComponentGlobalStyleObject.id = 'vue-glitch';
+    DOMComponentGlobalStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
+    
+    document.head.appendChild(DOMComponentGlobalStyleObject);
+
     export default {
         data: function() {
             return {
                 DOMStyleObject: null,
                 DOMStyleKeyframesObject: null,
+                DOMGlobalStyleObject: DOMComponentGlobalStyleObject,
                 observer: null,
                 content: null,
             }
@@ -85,8 +93,8 @@
             this.DOMStyleKeyframesObject.id = `${this.id}-keyframes`;
             this.DOMStyleKeyframesObject.innerHTML = componentKeyframes;
 
-            document.head.appendChild(this.DOMStyleObject);
-            document.head.appendChild(this.DOMStyleKeyframesObject);
+            this.DOMGlobalStyleObject.appendChild(this.DOMStyleObject);
+            this.DOMGlobalStyleObject.appendChild(this.DOMStyleKeyframesObject);
 
             if(this.glitch !== '') {
                 this.observer = new MutationObserver(function(mutations) {
@@ -107,26 +115,3 @@
         }
     }
 </script>
-<style>
-     .glitch {
-        position: relative;
-        overflow: hidden;
-        white-space: nowrap;
-     }
-
-     .glitch::before, .glitch::after {
-        position: absolute;
-        user-select: none;
-        top: 0;
-        overflow: hidden;
-        clip-path: inset(100% 0 0 0);
-     }
-
-     .glitch::before {
-        left: -1px;
-     }
-
-     .glitch::after {
-        left: 1px;
-     }
-</style>

@@ -9,6 +9,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/components/index.js'),
       name: 'vue-glitched',
+      formats: ["es", "umd"],
       filename: format => `vue-glitched.${format}.js`
     },
     rollupOptions: {
