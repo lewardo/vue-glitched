@@ -1,36 +1,39 @@
 <template>
-    <div :id="id" class="glitch glitching" ref="wrapper">
+    <span :id="id" class="glitch" ref="wrapper">
         <slot/>
-    </div>
+    </span>
 </template>
+
 <script>
+    let DOMComponentGlobalContainerObject = document.createElement('style');
     let DOMComponentGlobalStyleObject = document.createElement('style');
 
-    DOMComponentGlobalStyleObject.id = 'vue-glitch';
+    DOMComponentGlobalContainerObject.id = 'vue-glitch';
+
+    DOMComponentGlobalStyleObject.id = 'glitch-global-style';
     DOMComponentGlobalStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
     
-    document.head.appendChild(DOMComponentGlobalStyleObject);
+    document.head.appendChild(DOMComponentGlobalContainerObject);
+    DOMComponentGlobalContainerObject.appendChild(DOMComponentGlobalStyleObject);
 
     export default {
         data: function() {
             return {
                 DOMStyleObject: null,
                 DOMStyleKeyframesObject: null,
-                DOMGlobalStyleObject: DOMComponentGlobalStyleObject,
-                observer: null,
-                content: null,
+                DOMGlobalContainerObject: DOMComponentGlobalContainerObject,
             }
         },
         props: {
             id: {
                 type: String,
-                default: 'glitchy',
+                required: true,
             },
             start: {
                 type: Boolean,
                 default: true,
             },
-            glitch: {
+            text: {
                 type: String,
                 defualt: '',
             },
@@ -42,6 +45,10 @@
                 type: String,
                 default: 'var(--glitch-global-bg, #000)',
             },
+            colour: {
+                type: String,
+                default: '',
+            },
             intensity: {
                 type: Number,
                 default: 0.7,
@@ -51,15 +58,13 @@
                 default: 20,
             }
         },
+        expose: ['noglitch', 'glitch'],
         methods: {
-            stopGlitching: function() {
+            noglitch: function() {
                 document.getElementById(this.id).classList.remove('glitching');
             },
-            startGlitching: function() {
+            glitch: function() {
                 document.getElementById(this.id).classList.add('glitching');
-            },
-            toggleGlitching: function() {
-                document.getElementById(this.id).classList.toggle('glitching');
             },
             generateKeyframes: function() {
                 let keyframesBefore = '', keyframesAfter = '', keyframesEl = '';
@@ -75,9 +80,10 @@
             regurgitateStyling: function() {
                 const elDuraion = 7.9 + Math.random(), beforeDuration = 3.7 + Math.random(), afterDuration = 4.1 + Math.random();
 
-                this.content = this.glitch || this.$refs.wrapper.innerText;
+                this.content = this.text || this.$refs.wrapper.innerText;
+                this.glitchColour = this.colour || this.fg;
 
-                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fg};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fg};}`
+                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.glitchColour};background:${this.bg};text-shadow:-1px 0px ${this.glitchColour};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.glitchColour};background:${this.bg};text-shadow:1px 0 ${this.glitchColour};}`
             }
         },
         mounted: function() {
@@ -93,8 +99,10 @@
             this.DOMStyleKeyframesObject.id = `${this.id}-keyframes`;
             this.DOMStyleKeyframesObject.innerHTML = componentKeyframes;
 
-            this.DOMGlobalStyleObject.appendChild(this.DOMStyleObject);
-            this.DOMGlobalStyleObject.appendChild(this.DOMStyleKeyframesObject);
+            this.DOMGlobalContainerObject.appendChild(this.DOMStyleObject);
+            this.DOMGlobalContainerObject.appendChild(this.DOMStyleKeyframesObject);
+
+            this.start && this.glitch();
 
             if(this.glitch !== '') {
                 this.observer = new MutationObserver(function(mutations) {
@@ -109,9 +117,7 @@
             }
         },
         beforeDestroy: function() {
-            if(this.glitch !== '') {
-                this.observer.disconnect();
-            }
+            this.glitch !== '' && this.observer.disconnect();
         }
     }
 </script>
