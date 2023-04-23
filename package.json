@@ -1,7 +1,6 @@
 {
   "name": "vue-glitched",
   "files": ["dist"],
-  "main": "./dist/vue-glitched.umd.js",
   "module": "./dist/vue-glitched.es.js",
   "exports": {
     ".": {
@@ -9,7 +8,7 @@
       "require": "./dist/vue-glitched.umd.js"
     }
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
