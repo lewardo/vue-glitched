@@ -70,28 +70,32 @@
                 let keyframesBefore = '', keyframesAfter = '', keyframesEl = '';
 
                 for(let i = 0; i < this.steps; i++) {
-                    keyframesBefore += `${100 * i / this.steps}%{clip-path:inset(${Math.random() * 3 > this.intensity * 2 ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
-                    keyframesAfter += `${100 * i / this.steps}%{clip-path:inset(${Math.random() * 3 > this.intensity * 2 ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
-                    keyframesEl += `${100 * i / this.steps}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`
+                    const percent = Math.round(100 * i / this.steps);
+
+                    keyframesBefore += `${percent}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
+                    keyframesAfter += `${percent}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
+                    keyframesEl += `${percent}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`
                 }
 
                 return `@-webkit-keyframes noise-anim-${this.id}{${keyframesEl}}@keyframes noise-anim-${this.id}{${keyframesEl}}@-webkit-keyframes noise-anim-${this.id}-before{${keyframesBefore}}@keyframes noise-anim-${this.id}-before{${keyframesBefore}}@-webkit-keyframes noise-anim-${this.id}-after{${keyframesAfter}}@keyframes noise-anim-${this.id}-after{${keyframesAfter}}`
             },
             regurgitateStyling: function() {
-                const elDuraion = 7.9 + Math.random(), beforeDuration = 3.7 + Math.random(), afterDuration = 4.1 + Math.random();
+                const elDuraion = (7.9 + Math.random()).toFixed(2), 
+                      beforeDuration = (3.7 + Math.random()).toFixed(2), 
+                      afterDuration = (4.1 + Math.random()).toFixed(2);
 
-                this.content = this.text || this.$refs.wrapper.innerText;
-                this.glitchColour = this.colour || this.fg;
+                const content = this.text || this.$refs.wrapper.innerText;
+                const glitchColour = this.colour || this.fg;
 
-                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.glitchColour};background:${this.bg};text-shadow:-1px 0px ${this.glitchColour};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.glitchColour};background:${this.bg};text-shadow:1px 0 ${this.glitchColour};}`
+                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${content}";color:${glitchColour};background:${this.bg};text-shadow:-1px 0px ${glitchColour};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${content}";color:${glitchColour};background:${this.bg};text-shadow:1px 0 ${glitchColour};}`
             }
         },
         mounted: function() {
             const componentKeyframes = this.generateKeyframes();
             const componentStyle = this.regurgitateStyling();
 
-            this.DOMStyleObject = document.createElement('style');
-            this.DOMStyleKeyframesObject = document.createElement('style');
+            this.DOMStyleObject = document.getElementById(`${this.id}-style`) || document.createElement('style');
+            this.DOMStyleKeyframesObject = document.getElementById(`${this.id}-keyframes`) || document.createElement('style');
 
             this.DOMStyleObject.id = `${this.id}-style`;
             this.DOMStyleObject.innerHTML = componentStyle;
