@@ -12,7 +12,10 @@
 ```
 
 ```js
+// required attributes for component to function
 const required_attrs = [ 'id' ]
+
+// default values for optional props
 const default_props = {
     fg: 'var(--glitch-global-fg, #fff)',
     bg: 'var(--glitch-global-bg, #000)',
@@ -24,5 +27,6 @@ const default_props = {
 ```
 
 ```bash
+# install latest version to project directory
 npm install vue-glitched@latest
 ```
