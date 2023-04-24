@@ -2,11 +2,11 @@
 
 ```html
 <Glitch id="glitchy">simple text glitching vue component</Glitch>
-<Glitch id="intense" :intensity=0.9>built with vue & vite</Glitch>
-<Glitch id="colourful" bg="#1d2021" fg="#ebdbb2" colour="#928374">
+<Glitch id="intense" intense complex>built with vue & vite</Glitch>
+<Glitch id="colourful" bg="#1d2021" fg="#ebdbb2">
     simple to use, customisable
 </Glitch>
-<Glitch id="deferred" :start=false text="glitching overlay text">
+<Glitch id="deferred" defer text="glitching overlay text">
     and completely open source <3
 </Glitch>
 ```
@@ -16,14 +16,21 @@
 const required_attrs = [ 'id' ]
 
 // default values for optional props
-const default_props = {
-    fg: 'var(--glitch-global-fg, #fff)',
-    bg: 'var(--glitch-global-bg, #000)',
-    start: true,
-    text: {{ slot.$innerText }},
-    intensity: 0.7,
-    steps: 20
+const prop_defaults = {
+    sync: '',
+    fg: 'var(--glitch-global-fg, white)',
+    bg: 'var(--glitch-global-bg, black)',
+    text: {{ slot.$innerText }}
 }
+
+// prop switches that alter behaviour if present
+const prop_options = [
+    simple,
+    complex,
+    defer,
+    intense,
+    subtle
+]
 ```
 
 ```bash
