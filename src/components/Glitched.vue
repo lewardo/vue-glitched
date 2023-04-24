@@ -1,27 +1,27 @@
 <template>
-    <span :id="id" class="glitch" ref="wrapper">
-        <slot/>
+    <span :id="id" class="glitch" ref="glitch">
+        <slot></slot>
     </span>
 </template>
 
 <script>
-    let DOMComponentGlobalContainerObject = document.createElement('style');
-    let DOMComponentGlobalStyleObject = document.createElement('style');
+    let DOMComponentContainerObject = document.createElement('style');
+    let DOMComponentStyleObject = document.createElement('style');
 
-    DOMComponentGlobalContainerObject.id = 'vue-glitch';
+    DOMComponentContainerObject.id = 'vue-glitch';
 
-    DOMComponentGlobalStyleObject.id = 'glitch-global-style';
-    DOMComponentGlobalStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
+    DOMComponentStyleObject.id = 'glitch-global-style';
+    DOMComponentStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
     
-    document.head.appendChild(DOMComponentGlobalContainerObject);
-    DOMComponentGlobalContainerObject.appendChild(DOMComponentGlobalStyleObject);
+    document.head.appendChild(DOMComponentContainerObject);
+    DOMComponentContainerObject.appendChild(DOMComponentStyleObject);
 
     export default {
         data: function() {
             return {
                 DOMStyleObject: null,
-                DOMStyleKeyframesObject: null,
-                DOMGlobalContainerObject: DOMComponentGlobalContainerObject,
+                DOMKeyframesObject: null,
+                DOMGlobalContainerObject: DOMComponentContainerObject,
             }
         },
         props: {
@@ -29,91 +29,125 @@
                 type: String,
                 required: true,
             },
-            start: {
-                type: Boolean,
-                default: true,
+            sync: {
+                type: String,
+                default: '',
             },
             text: {
                 type: String,
                 defualt: '',
             },
-            fg: {
-                type: String,
-                default: 'var(--glitch-global-fg, #fff)',
+            defer: {
+                type: Boolean,
             },
             bg: {
                 type: String,
                 default: 'var(--glitch-global-bg, #000)',
             },
-            colour: {
+            fg: {
                 type: String,
-                default: '',
+                default: 'var(--glitch-global-fg, #fff)',
             },
-            intensity: {
-                type: Number,
-                default: 0.7,
+            fga: {
+                type: String,
+                default: 'var(--glitch-global-fg, #fff)',
             },
-            steps: {
-                type: Number,
-                default: 20,
+            fgb: {
+                type: String,
+                default: 'var(--glitch-global-fg, #fff)',
+            },
+            intense: {
+                type: Boolean,
+            },
+            subtle: {
+                type: Boolean,
+            },
+            simple: {
+                type: Boolean,
+            },
+            complex: {
+                type: Boolean,
+            },
+        },
+        computed: {
+            DOMGlitchObject: function() {
+                return this.$refs.glitch;
+            },
+            steps: function() {
+                if(this.simple ^ this.complex) {
+                    if(this.simple) return 10;
+                    else return 40;
+                } else {
+                    return 20;
+                }
+            },
+            intensity: function() {
+                if(this.subtle ^ this.intense) {
+                    if(this.subtle) return 0.1;
+                    else return 1;
+                } else {
+                    return 0.7;
+                }
+            },
+            content: function() {
+                return this.text || this.DOMGlitchObject.innerText;
+            },
+            animation: function() {
+                return this.sync || this.id;
             }
         },
         expose: ['noglitch', 'glitch'],
         methods: {
             noglitch: function() {
-                document.getElementById(this.id).classList.remove('glitching');
+                this.DOMGlitchObject.classList.remove('glitching');
             },
             glitch: function() {
-                document.getElementById(this.id).classList.add('glitching');
+                this.DOMGlitchObject.classList.add('glitching');
             },
             generateKeyframes: function() {
-                let keyframesBefore = '', keyframesAfter = '', keyframesEl = '';
+                let keyframes = '', keyframesBefore = '', keyframesAfter = '';
 
                 for(let i = 0; i < this.steps; i++) {
                     const percent = Math.round(100 * i / this.steps);
 
+                    keyframes += `${percent}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`;
                     keyframesBefore += `${percent}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
                     keyframesAfter += `${percent}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
-                    keyframesEl += `${percent}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`
                 }
 
-                return `@-webkit-keyframes noise-anim-${this.id}{${keyframesEl}}@keyframes noise-anim-${this.id}{${keyframesEl}}@-webkit-keyframes noise-anim-${this.id}-before{${keyframesBefore}}@keyframes noise-anim-${this.id}-before{${keyframesBefore}}@-webkit-keyframes noise-anim-${this.id}-after{${keyframesAfter}}@keyframes noise-anim-${this.id}-after{${keyframesAfter}}`
+                return `@-webkit-keyframes noise-anim-${this.id}{${keyframes}}@keyframes noise-anim-${this.id}{${keyframes}}@-webkit-keyframes noise-anim-${this.id}-before{${keyframesBefore}}@keyframes noise-anim-${this.id}-before{${keyframesBefore}}@-webkit-keyframes noise-anim-${this.id}-after{${keyframesAfter}}@keyframes noise-anim-${this.id}-after{${keyframesAfter}}`
             },
             regurgitateStyling: function() {
-                const elDuraion = (7.9 + Math.random()).toFixed(2), 
+                const duraion = (7.9 + Math.random()).toFixed(2), 
                       beforeDuration = (3.7 + Math.random()).toFixed(2), 
                       afterDuration = (4.1 + Math.random()).toFixed(2);
+                
+                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${duraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${duraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fgb};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fga};background:${this.bg};text-shadow:1px 0 ${this.fga};}`
+            },
+            appendStyle: function(id, style) {
+                const el = document.createElement('style');
 
-                const content = this.text || this.$refs.wrapper.innerText;
-                const glitchColour = this.colour || this.fg;
+                el.id = id;
+                el.innerHTML = style;
 
-                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${elDuraion}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${content}";color:${glitchColour};background:${this.bg};text-shadow:-1px 0px ${glitchColour};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${content}";color:${glitchColour};background:${this.bg};text-shadow:1px 0 ${glitchColour};}`
+                this.DOMGlobalContainerObject.appendChild(el);
             }
         },
         mounted: function() {
             const componentKeyframes = this.generateKeyframes();
             const componentStyle = this.regurgitateStyling();
 
-            this.DOMStyleObject = document.getElementById(`${this.id}-style`) || document.createElement('style');
-            this.DOMStyleKeyframesObject = document.getElementById(`${this.id}-keyframes`) || document.createElement('style');
+            this.appendStyle(`${this.id}-style`, componentStyle);
 
-            this.DOMStyleObject.id = `${this.id}-style`;
-            this.DOMStyleObject.innerHTML = componentStyle;
+            this.sync || this.appendStyle(`${this.id}-keyframes`, componentKeyframes);
+            this.defer || this.glitch();
 
-            this.DOMStyleKeyframesObject.id = `${this.id}-keyframes`;
-            this.DOMStyleKeyframesObject.innerHTML = componentKeyframes;
-
-            this.DOMGlobalContainerObject.appendChild(this.DOMStyleObject);
-            this.DOMGlobalContainerObject.appendChild(this.DOMStyleKeyframesObject);
-
-            this.start && this.glitch();
-
-            if(this.glitch !== '') {
+            if(this.glitch) {
                 this.observer = new MutationObserver(function(mutations) {
                     this.DOMStyleObject.innerHTML = this.regurgitateStyling();
                 }.bind(this));
 
-                this.observer.observe(this.$el, { 
+                this.observer.observe(this.DOMGlitchObject, { 
                     characterData: true, 
                     childList: true,
                     subtree: true,
