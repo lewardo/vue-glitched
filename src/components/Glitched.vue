@@ -42,19 +42,19 @@
             },
             bg: {
                 type: String,
-                default: 'var(--glitch-global-bg, #000)',
+                default: 'var(--glitch-global-bg, black)',
             },
             fg: {
                 type: String,
-                default: 'var(--glitch-global-fg, #fff)',
+                default: 'var(--glitch-global-fg, white)',
             },
             fga: {
                 type: String,
-                default: 'var(--glitch-global-fg, #fff)',
+                default: 'var(--glitch-global-fg, white)',
             },
             fgb: {
                 type: String,
-                default: 'var(--glitch-global-fg, #fff)',
+                default: 'var(--glitch-global-fg, white)',
             },
             intense: {
                 type: Boolean,
