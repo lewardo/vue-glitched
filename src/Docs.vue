@@ -1,14 +1,14 @@
 <script setup>
-  import { Glitch } from '@/components/';
+  import Glitch from '@/components/Glitched.vue';
 </script>
 
 <template>
   <div class="wrapper">
     <Glitch id="glitchy">vue3 text glitching component</Glitch>
-    <Glitch id="intense" :intensity=1>built with <span style="color: #41b883;">vue</span> &amp; <span style="color: #bd34fe;">vite</span></Glitch>
+    <Glitch id="intense" sync="glitchy">built with <span style="color: #41b883;">vue</span> &amp; <span style="color: #bd34fe;">vite</span></Glitch>
     <div>
-      <Glitch id="colourful" bg="#1d2021" fg="#ebdbb2" colour="#928374">simple to use, customisable, and&nbsp;</Glitch>
-      <Glitch id="alternate" :start=true :intensity=0.25 text="different glitching overlay">completely open source <span style="color: #cc241d;">&lt;3</span></Glitch>
+      <Glitch id="colourful">simple to use, customisable, and&nbsp;</Glitch>
+      <Glitch id="alternate" text="different glitching overlay">completely open source <span style="color: #cc241d;">&lt;3</span></Glitch>
     </div>
       <a href="https://github.com/lewardo/vue-glitched">@lewardo</a>
   </div>
