@@ -1,5 +1,5 @@
 <script setup>
-  import { Glitch } from './components/';
+  import { Glitch } from '@/components/';
 </script>
 
 <template>

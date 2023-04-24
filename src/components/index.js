@@ -1,1 +1,1 @@
-export { default as Glitch } from './Glitched.vue';
+export { default as Glitch } from '@/components/Glitched.vue';

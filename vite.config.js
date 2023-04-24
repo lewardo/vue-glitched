@@ -9,23 +9,33 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     return {
       plugins: [vue()],
       base: '/vue-glitched/',
+      resolve: {
+        alias: {
+          '@': resolve(__dirname, 'src')
+        }
+      },
       build: {
         minify: true,
         outDir: 'docs',
         rollupOptions: {
           input: {
-            index: resolve(__dirname, 'index.html'),
+            index: resolve(__dirname, 'index.html')
           },
           output: {
             entryFileNames: 'assets/[name].js',
             chunkFileNames: 'assets/[name].js',
-            assetFileNames: 'assets/[name].[ext]',
+            assetFileNames: 'assets/[name].[ext]'
           }
         }
       }
     }
   } else {
     return {
+      resolve: {
+        alias: {
+          '@': resolve(__dirname, 'src')
+        }
+      },
       build: {
         lib: {
           entry: resolve(__dirname, 'src/components/index.js'),
@@ -37,12 +47,12 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           external: ['vue'],
           output: {
             globals: {
-              vue: 'Vue',
+              vue: 'Vue'
             },
           },
         },
       },
-      plugins: [vue()],
+      plugins: [vue()]
     }
   }
 })
