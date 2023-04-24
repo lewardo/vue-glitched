@@ -6,7 +6,7 @@
   <div class="wrapper">
     <Glitch id="glitchy">vue3 text glitching component</Glitch>
     <Glitch id="intense" sync="glitchy">built with <span style="color: #41b883;">vue</span> &amp; <span style="color: #bd34fe;">vite</span></Glitch>
-    <div>
+    <div class="paragraph">
       <Glitch id="colourful">simple to use, customisable, and&nbsp;</Glitch>
       <Glitch id="alternate" text="different glitching overlay">completely open source <span style="color: #cc241d;">&lt;3</span></Glitch>
     </div>
@@ -38,18 +38,24 @@
     align-items: center;
   }
 
+  .paragraph {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .glitch {
     font-family: monospace;
-    display: block;
   }
 
   #glitchy {
-    font-size: 48px;
-    margin: 20px 0;
+    font-size: min(48px, 4vmax);
+    text-align: center;
+    margin: 5vh 5vw;
   }
 
   #intense, #colourful, #alternate {
-    font-size: 24px;
+    font-size: min(24px, 2vmax);
   }
 
   #colourful, #alternate {
@@ -57,9 +63,9 @@
   }
   
   a, a:visited {
-    margin: 20px;
+    margin: 2vmax;
     font-family: monospace;
-    font-size: 20px;
+    font-size: min(20px, 2vmax);
     color: #928374;
     text-decoration: none;
     position: absolute;
