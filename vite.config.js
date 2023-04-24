@@ -36,6 +36,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           '@': resolve(__dirname, 'src')
         }
       },
+      publicDir: false,
       build: {
         lib: {
           entry: resolve(__dirname, 'src/components/index.js'),
