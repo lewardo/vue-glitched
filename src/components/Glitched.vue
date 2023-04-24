@@ -11,7 +11,7 @@
     DOMComponentContainerObject.id = 'vue-glitch';
 
     DOMComponentStyleObject.id = 'glitch-global-style';
-    DOMComponentStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
+    DOMComponentStyleObject.innerHTML = `.glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}`;
     
     document.head.appendChild(DOMComponentContainerObject);
     DOMComponentContainerObject.appendChild(DOMComponentStyleObject);
