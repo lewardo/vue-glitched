@@ -1,22 +1,22 @@
-import { openBlock as o, createElementBlock as l, renderSlot as h } from "vue";
-const c = (t, i) => {
-  const e = t.__vccOpts || t;
-  for (const [s, n] of i)
-    e[s] = n;
-  return e;
+import { openBlock as o, createElementBlock as h, renderSlot as l } from "vue";
+const c = (e, i) => {
+  const t = e.__vccOpts || e;
+  for (const [n, s] of i)
+    t[n] = s;
+  return t;
 };
-let r = document.createElement("style"), a = document.createElement("style");
-r.id = "vue-glitch";
-a.id = "glitch-global-style";
-a.innerHTML = ".glitch{position:relative;overflow:hidden;white-space:nowrap;}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
-document.head.appendChild(r);
-r.appendChild(a);
-const d = {
+let a = document.createElement("style"), r = document.createElement("style");
+a.id = "vue-glitch";
+r.id = "glitch-global-style";
+r.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
+document.head.appendChild(a);
+a.appendChild(r);
+const f = {
   data: function() {
     return {
       DOMStyleObject: null,
-      DOMStyleKeyframesObject: null,
-      DOMGlobalContainerObject: r
+      DOMKeyframesObject: null,
+      DOMGlobalContainerObject: a
     };
   },
   props: {
@@ -24,61 +24,93 @@ const d = {
       type: String,
       required: !0
     },
-    start: {
-      type: Boolean,
-      default: !0
+    sync: {
+      type: String,
+      default: ""
     },
     text: {
       type: String,
       defualt: ""
     },
-    fg: {
-      type: String,
-      default: "var(--glitch-global-fg, #fff)"
+    defer: {
+      type: Boolean
     },
     bg: {
       type: String,
       default: "var(--glitch-global-bg, #000)"
     },
-    colour: {
+    fg: {
       type: String,
-      default: ""
+      default: "var(--glitch-global-fg, #fff)"
     },
-    intensity: {
-      type: Number,
-      default: 0.7
+    fga: {
+      type: String,
+      default: "var(--glitch-global-fg, #fff)"
     },
-    steps: {
-      type: Number,
-      default: 20
+    fgb: {
+      type: String,
+      default: "var(--glitch-global-fg, #fff)"
+    },
+    intense: {
+      type: Boolean
+    },
+    subtle: {
+      type: Boolean
+    },
+    simple: {
+      type: Boolean
+    },
+    complex: {
+      type: Boolean
+    }
+  },
+  computed: {
+    DOMGlitchObject: function() {
+      return this.$refs.glitch;
+    },
+    steps: function() {
+      return this.simple ^ this.complex ? this.simple ? 10 : 40 : 20;
+    },
+    intensity: function() {
+      return this.subtle ^ this.intense ? this.subtle ? 0.1 : 1 : 0.7;
+    },
+    content: function() {
+      return this.text || this.DOMGlitchObject.innerText;
+    },
+    animation: function() {
+      return this.sync || this.id;
     }
   },
   expose: ["noglitch", "glitch"],
   methods: {
     noglitch: function() {
-      document.getElementById(this.id).classList.remove("glitching");
+      this.DOMGlitchObject.classList.remove("glitching");
     },
     glitch: function() {
-      document.getElementById(this.id).classList.add("glitching");
+      this.DOMGlitchObject.classList.add("glitching");
     },
     generateKeyframes: function() {
-      let t = "", i = "", e = "";
-      for (let s = 0; s < this.steps; s++) {
-        const n = Math.round(100 * s / this.steps);
-        t += `${n}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`, i += `${n}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`, e += `${n}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`;
+      let e = "", i = "", t = "";
+      for (let n = 0; n < this.steps; n++) {
+        const s = Math.round(100 * n / this.steps);
+        e += `${s}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`, i += `${s}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`, t += `${s}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
       }
-      return `@-webkit-keyframes noise-anim-${this.id}{${e}}@keyframes noise-anim-${this.id}{${e}}@-webkit-keyframes noise-anim-${this.id}-before{${t}}@keyframes noise-anim-${this.id}-before{${t}}@-webkit-keyframes noise-anim-${this.id}-after{${i}}@keyframes noise-anim-${this.id}-after{${i}}`;
+      return `@-webkit-keyframes noise-anim-${this.id}{${e}}@keyframes noise-anim-${this.id}{${e}}@-webkit-keyframes noise-anim-${this.id}-before{${i}}@keyframes noise-anim-${this.id}-before{${i}}@-webkit-keyframes noise-anim-${this.id}-after{${t}}@keyframes noise-anim-${this.id}-after{${t}}`;
     },
     regurgitateStyling: function() {
-      const t = (7.9 + Math.random()).toFixed(2), i = (3.7 + Math.random()).toFixed(2), e = (4.1 + Math.random()).toFixed(2), s = this.text || this.$refs.wrapper.innerText, n = this.colour || this.fg;
-      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.id} ${t}s infinite step-end alternate-reverse;animation:noise-anim-${this.id} ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.id}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.id}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${s}";color:${n};background:${this.bg};text-shadow:-1px 0px ${n};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.id}-after ${e} infinite step-end alternate-reverse;animation:noise-anim-${this.id}-after ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${s}";color:${n};background:${this.bg};text-shadow:1px 0 ${n};}`;
+      const e = (7.9 + Math.random()).toFixed(2), i = (3.7 + Math.random()).toFixed(2), t = (4.1 + Math.random()).toFixed(2);
+      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fgb};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fga};background:${this.bg};text-shadow:1px 0 ${this.fga};}`;
+    },
+    appendStyle: function(e, i) {
+      const t = document.createElement("style");
+      t.id = e, t.innerHTML = i, this.DOMGlobalContainerObject.appendChild(t);
     }
   },
   mounted: function() {
-    const t = this.generateKeyframes(), i = this.regurgitateStyling();
-    this.DOMStyleObject = document.getElementById(`${this.id}-style`) || document.createElement("style"), this.DOMStyleKeyframesObject = document.getElementById(`${this.id}-keyframes`) || document.createElement("style"), this.DOMStyleObject.id = `${this.id}-style`, this.DOMStyleObject.innerHTML = i, this.DOMStyleKeyframesObject.id = `${this.id}-keyframes`, this.DOMStyleKeyframesObject.innerHTML = t, this.DOMGlobalContainerObject.appendChild(this.DOMStyleObject), this.DOMGlobalContainerObject.appendChild(this.DOMStyleKeyframesObject), this.start && this.glitch(), this.glitch !== "" && (this.observer = new MutationObserver(function(e) {
+    const e = this.generateKeyframes(), i = this.regurgitateStyling();
+    this.appendStyle(`${this.id}-style`, i), this.sync || this.appendStyle(`${this.id}-keyframes`, e), this.defer || this.glitch(), this.glitch && (this.observer = new MutationObserver(function(t) {
       this.DOMStyleObject.innerHTML = this.regurgitateStyling();
-    }.bind(this)), this.observer.observe(this.$el, {
+    }.bind(this)), this.observer.observe(this.DOMGlitchObject, {
       characterData: !0,
       childList: !0,
       subtree: !0
@@ -87,17 +119,17 @@ const d = {
   beforeDestroy: function() {
     this.glitch !== "" && this.observer.disconnect();
   }
-}, f = ["id"];
-function m(t, i, e, s, n, g) {
-  return o(), l("span", {
-    id: e.id,
+}, d = ["id"];
+function g(e, i, t, n, s, m) {
+  return o(), h("span", {
+    id: t.id,
     class: "glitch",
-    ref: "wrapper"
+    ref: "glitch"
   }, [
-    h(t.$slots, "default")
-  ], 8, f);
+    l(e.$slots, "default")
+  ], 8, d);
 }
-const p = /* @__PURE__ */ c(d, [["render", m]]);
+const p = /* @__PURE__ */ c(f, [["render", g]]);
 export {
   p as Glitch
 };
