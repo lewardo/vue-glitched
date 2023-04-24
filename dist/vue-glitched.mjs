@@ -11,7 +11,7 @@ r.id = "glitch-global-style";
 r.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
 document.head.appendChild(a);
 a.appendChild(r);
-const f = {
+const d = {
   data: function() {
     return {
       DOMStyleObject: null,
@@ -37,19 +37,19 @@ const f = {
     },
     bg: {
       type: String,
-      default: "var(--glitch-global-bg, #000)"
+      default: "var(--glitch-global-bg, black)"
     },
     fg: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fg, white)"
     },
     fga: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fg, white)"
     },
     fgb: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fg, white)"
     },
     intense: {
       type: Boolean
@@ -119,7 +119,7 @@ const f = {
   beforeDestroy: function() {
     this.glitch !== "" && this.observer.disconnect();
   }
-}, d = ["id"];
+}, f = ["id"];
 function g(e, i, t, n, s, m) {
   return o(), h("span", {
     id: t.id,
@@ -127,9 +127,9 @@ function g(e, i, t, n, s, m) {
     ref: "glitch"
   }, [
     l(e.$slots, "default")
-  ], 8, d);
+  ], 8, f);
 }
-const p = /* @__PURE__ */ c(f, [["render", g]]);
+const p = /* @__PURE__ */ c(d, [["render", g]]);
 export {
   p as Glitch
 };
