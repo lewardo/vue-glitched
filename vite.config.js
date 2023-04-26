@@ -17,6 +17,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           outDir: 'docs',
           content: `/*
  * vue-glitched v${pkg.version}
+ *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
  *                       _ _ _       _         _ 
@@ -55,6 +56,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         banner({
           content: `/*
  * vue-glitched v${pkg.version}
+ *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
  *                       _ _ _       _         _ 
