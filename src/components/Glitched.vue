@@ -1,3 +1,8 @@
+<!-- 
+  Copyright (c) 2023 lewardo (https://github.com/lewardo)
+  SPDX-License-Identifier: GPL-3.0+ 
+-->
+
 <template>
     <span :id="id" class="glitch" ref="glitch">
         <slot></slot>

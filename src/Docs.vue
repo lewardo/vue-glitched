@@ -1,3 +1,8 @@
+<!-- 
+  Copyright (c) 2023 lewardo (https://github.com/lewardo)
+  SPDX-License-Identifier: GPL-3.0+ 
+-->
+
 <script setup>
   import Glitch from '@/components/Glitched.vue';
 </script>
