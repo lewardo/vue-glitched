@@ -1,20 +1,20 @@
 {
   "name": "vue-glitched",
   "description": "a vue3 component to add a glitching effect to text",
-  "author": { 
-    "name": "lewardo", 
-    "email": "lewardo23@gmail.com", 
-    "url": "https://github.com/lewardo" 
+  "author": {
+    "name": "lewardo",
+    "email": "lewardo23@gmail.com",
+    "url": "https://github.com/lewardo"
   },
   "license": "GPL-3.0",
   "homepage": "https://lewardo.github.io/lewardo/vue-glitched",
-  "repository": { 
-    "url": "https://github.com/lewardo/vue-glitched.git" 
+  "repository": {
+    "url": "https://github.com/lewardo/vue-glitched.git"
   },
-  "keywords": [ 
-    "vue", 
-    "vue-component", 
-    "glitch" 
+  "keywords": [
+    "vue",
+    "vue-component",
+    "glitch"
   ],
   "bugs": {
     "email": "lewardo23@gmail.com",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
-    "vite": "^4.3.0"
+    "vite": "^4.3.0",
+    "vite-plugin-banner": "^0.7.0"
   }
 }
