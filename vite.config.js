@@ -41,7 +41,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         lib: {
           entry: resolve(__dirname, 'src/components/index.js'),
           name: 'vue-glitched',
-          formats: ["es", "umd", "cjs"],
+          formats: ["es", "umd"],
           filename: format => `vue-glitched.${format}.js`
         },
         rollupOptions: {
