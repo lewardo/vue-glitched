@@ -1,4 +1,4 @@
-name: docs build validation
+name: demo build validation
 
 on:
   push:
