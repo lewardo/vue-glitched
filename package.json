@@ -31,7 +31,7 @@
       "require": "./dist/vue-glitched.umd.js"
     }
   },
-  "version": "0.3.1",
+  "version": "0.3.2",
   "scripts": {
     "dev": "vite",
     "dev-lan": "vite --host",

@@ -1,4 +1,14 @@
-import { openBlock as o, createElementBlock as h, renderSlot as l } from "vue";
+/*
+ * vue-glitched v0.3.1
+ * Copyright (c) 2023 lewardo (https://github.com/lewardo)
+ * SPDX-License-Identifier: GPL-3.0+                                  
+ *                       _ _ _       _         _ 
+ *   _ _ _ _ ___ ___ ___| |_| |_ ___| |_ ___ _| |
+ *  | | | | | -_|___| . | | |  _|  _|   | -_| . |
+ *   \_/|___|___|   |_  |_|_|_| |___|_|_|___|___|
+ *                  |___|                        
+ */
+import { openBlock as o, createElementBlock as l, renderSlot as h } from "vue";
 const c = (e, i) => {
   const t = e.__vccOpts || e;
   for (const [n, s] of i)
@@ -8,10 +18,10 @@ const c = (e, i) => {
 let a = document.createElement("style"), r = document.createElement("style");
 a.id = "vue-glitch";
 r.id = "glitch-global-style";
-r.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
+r.innerHTML = ".glitch{position:relative;overflow:hidden;white-space:nowrap}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
 document.head.appendChild(a);
 a.appendChild(r);
-const d = {
+const f = {
   data: function() {
     return {
       DOMStyleObject: null,
@@ -37,19 +47,19 @@ const d = {
     },
     bg: {
       type: String,
-      default: "var(--glitch-global-bg, black)"
+      default: "var(--glitch-global-bg, #000)"
     },
     fg: {
       type: String,
-      default: "var(--glitch-global-fg, white)"
+      default: "var(--glitch-global-fg, #fff)"
     },
     fga: {
       type: String,
-      default: "var(--glitch-global-fg, white)"
+      default: "var(--glitch-global-fg, #fff)"
     },
     fgb: {
       type: String,
-      default: "var(--glitch-global-fg, white)"
+      default: "var(--glitch-global-fg, #fff)"
     },
     intense: {
       type: Boolean
@@ -69,7 +79,7 @@ const d = {
       return this.$refs.glitch;
     },
     steps: function() {
-      return this.simple ^ this.complex ? this.simple ? 10 : 40 : 20;
+      return this.simple ^ this.complex ? this.simple ? 10 : 50 : 20;
     },
     intensity: function() {
       return this.subtle ^ this.intense ? this.subtle ? 0.1 : 1 : 0.7;
@@ -92,13 +102,13 @@ const d = {
     generateKeyframes: function() {
       let e = "", i = "", t = "";
       for (let n = 0; n < this.steps; n++) {
-        const s = Math.round(100 * n / this.steps);
-        e += `${s}%{clip-path:inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`, i += `${s}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`, t += `${s}%{clip-path:inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
+        const s = 100 * n / this.steps;
+        e += `${s}%{clip-path: inset(${Math.random() * 25 > this.intensity ? 0 : 50}% 0 ${Math.random() * 25 > this.intensity ? 0 : 25}% 0);}`, i += `${s}%{clip-path: inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`, t += `${s}%{clip-path: inset(${Math.random() > this.intensity ? 100 : Math.round(Math.random() * 100)}% 0 ${Math.round(Math.random() * 100)}% 0);}`;
       }
       return `@-webkit-keyframes noise-anim-${this.id}{${e}}@keyframes noise-anim-${this.id}{${e}}@-webkit-keyframes noise-anim-${this.id}-before{${i}}@keyframes noise-anim-${this.id}-before{${i}}@-webkit-keyframes noise-anim-${this.id}-after{${t}}@keyframes noise-anim-${this.id}-after{${t}}`;
     },
     regurgitateStyling: function() {
-      const e = (7.9 + Math.random()).toFixed(2), i = (3.7 + Math.random()).toFixed(2), t = (4.1 + Math.random()).toFixed(2);
+      const e = 7.9 + Number.parseFloat(Math.random().toFixed(3)), i = 3.7 + Number.parseFloat(Math.random().toFixed(3)), t = 4.1 + Number.parseFloat(Math.random().toFixed(3));
       return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fgb};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fga};background:${this.bg};text-shadow:1px 0 ${this.fga};}`;
     },
     appendStyle: function(e, i) {
@@ -119,17 +129,17 @@ const d = {
   beforeDestroy: function() {
     this.glitch !== "" && this.observer.disconnect();
   }
-}, f = ["id"];
-function g(e, i, t, n, s, m) {
-  return o(), h("span", {
+}, d = ["id"];
+function m(e, i, t, n, s, p) {
+  return o(), l("span", {
     id: t.id,
     class: "glitch",
     ref: "glitch"
   }, [
-    l(e.$slots, "default")
-  ], 8, f);
+    h(e.$slots, "default")
+  ], 8, d);
 }
-const p = /* @__PURE__ */ c(d, [["render", g]]);
+const u = /* @__PURE__ */ c(f, [["render", m]]);
 export {
-  p as Glitch
+  u as Glitch
 };
