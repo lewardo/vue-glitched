@@ -14,15 +14,33 @@
   </div>
 </template>
 
+<script>
+  export default {
+    mounted: function() {
+      const setHeight = () => {
+        return document.documentElement.style.setProperty('--doc-height', `${window.innerHeight}px`)
+      }
+
+      setHeight() || window.addEventListener('resize', setHeight);
+    }
+  }
+</script>
+
 <style>
+  :root {
+    --doc-height: 100%;
+  }
+
   body {
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    height: var(--doc-height);
+    position: fixed;
     top: 0;
     left: 0;
+    overflow: hidden;
     box-sizing: border-box;
     place-items: center;
     display: grid;
