@@ -106,4 +106,7 @@ npm run docs
 ```
 
 ## acknowledgements
-based on the effect described in [this article](https://css-tricks.com/glitch-effect-text-images-svg/) with some improvements, hoping to be the analog to Vue that [mgGlitch](https://github.com/hmongouachon/mgGlitch) was to [JQuery](https://jquery.com), and inspired by the legacy [vue-glitch](https://github.com/ianaya89/vue-glitch)
+based on the effect described in [this article](https://css-tricks.com/glitch-effect-text-images-svg/) with some improvements, inspired by the legacy [vue-glitch](https://github.com/ianaya89/vue-glitch), and hoping to be to vue what [mgGlitch](https://github.com/hmongouachon/mgGlitch) was to [jquery](https://jquery.com)
+
+## license
+![license](https://img.shields.io/npm/l/vue-glitched?style=plastic)
