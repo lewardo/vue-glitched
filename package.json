@@ -7,6 +7,7 @@
     "url": "https://github.com/lewardo" 
   },
   "license": "GPL-3.0",
+  "homepage": "https://lewardo.github.io/lewardo/vue-glitched",
   "repository": { 
     "url": "https://github.com/lewardo/vue-glitched.git" 
   },
@@ -15,6 +16,10 @@
     "vue-component", 
     "glitch" 
   ],
+  "bugs": {
+    "email": "lewardo23@gmail.com",
+    "url": "https://github.com/lewardo/vue-glitched/issues"
+  },
   "files": [
     "dist"
   ],
