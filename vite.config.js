@@ -1,13 +1,32 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+
 import vue from '@vitejs/plugin-vue'
+import banner from 'vite-plugin-banner'
+
+import pkg from './package.json'
 
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, ssrBuild }) => {
   if(mode === 'docs') {
     return {
-      plugins: [vue()],
+      plugins: [
+        vue(), 
+        banner({
+          outDir: 'docs',
+          content: `/*
+ * vue-glitched v${pkg.version}
+ * Copyright (c) 2023 lewardo (https://github.com/lewardo)
+ * SPDX-License-Identifier: GPL-3.0+                                  
+ *                       _ _ _       _         _ 
+ *   _ _ _ _ ___ ___ ___| |_| |_ ___| |_ ___ _| |
+ *  | | | | | -_|___| . | | |  _|  _|   | -_| . |
+ *   \\_/|___|___|   |_  |_|_|_| |___|_|_|___|___|
+ *                  |___|                        
+ */`
+        })
+      ],      
       base: '/vue-glitched/',
       resolve: {
         alias: {
@@ -31,6 +50,21 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     }
   } else {
     return {
+      plugins: [
+        vue(), 
+        banner({
+          content: `/*
+ * vue-glitched v${pkg.version}
+ * Copyright (c) 2023 lewardo (https://github.com/lewardo)
+ * SPDX-License-Identifier: GPL-3.0+                                  
+ *                       _ _ _       _         _ 
+ *   _ _ _ _ ___ ___ ___| |_| |_ ___| |_ ___ _| |
+ *  | | | | | -_|___| . | | |  _|  _|   | -_| . |
+ *   \\_/|___|___|   |_  |_|_|_| |___|_|_|___|___|
+ *                  |___|                        
+ */`
+        })
+      ],
       resolve: {
         alias: {
           '@': resolve(__dirname, 'src')
@@ -49,11 +83,10 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           output: {
             globals: {
               vue: 'Vue'
-            },
-          },
-        },
-      },
-      plugins: [vue()]
+            }
+          }
+        }
+      }
     }
   }
 })
