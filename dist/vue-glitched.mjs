@@ -1,5 +1,6 @@
 /*
- * vue-glitched v0.3.1
+ * vue-glitched v0.3.3
+ *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
  *                       _ _ _       _         _ 
