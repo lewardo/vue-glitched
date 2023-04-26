@@ -6,6 +6,8 @@ name: npm-package
 on:
   release:
     types: [published]
+  
+  workflow_dispatch:
 
 jobs:
   build:
