@@ -47,19 +47,19 @@
             },
             bg: {
                 type: String,
-                default: 'var(--glitch-global-bg, #000)',
+                default: 'var(--glitch-global-bg, #fff)',
             },
             fg: {
                 type: String,
-                default: 'var(--glitch-global-fg, #fff)',
+                default: 'var(--glitch-global-fg, #000)',
             },
             fga: {
                 type: String,
-                default: 'var(--glitch-global-fga, #fff)',
+                default: '',
             },
             fgb: {
                 type: String,
-                default: 'var(--glitch-global-fgb, #fff)',
+                default: '',
             },
             intense: {
                 type: Boolean,
@@ -77,6 +77,14 @@
         computed: {
             DOMGlitchObject: function() {
                 return this.$refs.glitch;
+            },
+            fgAfter: function() {
+                if(this.fga) return this.fga;
+                else return `var(--glitch-global-fga, ${this.fg})`;
+            },
+            fgBefore: function() {
+                if(this.fgb) return this.fgb;
+                else return `var(--glitch-global-fgb, ${this.fg})`;
             },
             steps: function() {
                 if(this.simple ^ this.complex) {
@@ -127,7 +135,7 @@
                       beforeDuration = 3.7 + Number.parseFloat(Math.random().toFixed(3)), 
                       afterDuration  = 4.1 + Number.parseFloat(Math.random().toFixed(3));
                 
-                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${duration}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${duration}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fga};}`
+                return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${duration}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${duration}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${beforeDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fgBefore};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${afterDuration} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${afterDuration}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fgAfter};}`
             },
             appendStyle: function(id, style) {
                 const el = document.createElement('style');
