@@ -1,5 +1,5 @@
 /*
- * vue-glitched v0.3.3
+ * vue-glitched v0.3.4
  *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
@@ -19,7 +19,7 @@ const c = (e, i) => {
 let a = document.createElement("style"), r = document.createElement("style");
 a.id = "vue-glitch";
 r.id = "glitch-global-style";
-r.innerHTML = ".glitch{position:relative;overflow:hidden;white-space:nowrap}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;overflow:hidden;clip-path:inset(100% 0 0 0);}.glitch::before{ left: -1px; }.glitch::after{left:1px;}";
+r.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;left:0;overflow:hidden;clip-path:inset(100% 0 0 0)}.glitch::before{transform:translateX(-1px);}.glitch::after{transform:translateX(1px);}";
 document.head.appendChild(a);
 a.appendChild(r);
 const f = {
@@ -56,11 +56,11 @@ const f = {
     },
     fga: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fga, #fff)"
     },
     fgb: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fgb, #fff)"
     },
     intense: {
       type: Boolean
@@ -110,7 +110,7 @@ const f = {
     },
     regurgitateStyling: function() {
       const e = 7.9 + Number.parseFloat(Math.random().toFixed(3)), i = 3.7 + Number.parseFloat(Math.random().toFixed(3)), t = 4.1 + Number.parseFloat(Math.random().toFixed(3));
-      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fgb};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fga};background:${this.bg};text-shadow:1px 0 ${this.fga};}`;
+      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fga};}`;
     },
     appendStyle: function(e, i) {
       const t = document.createElement("style");
@@ -131,7 +131,7 @@ const f = {
     this.glitch !== "" && this.observer.disconnect();
   }
 }, d = ["id"];
-function m(e, i, t, n, s, p) {
+function m(e, i, t, n, s, g) {
   return o(), l("span", {
     id: t.id,
     class: "glitch",
