@@ -53,6 +53,8 @@
 
     --glitch-global-bg: #1d2021;
     --glitch-global-fg: #ebdbb2;
+    --glitch-global-fga: #076678;
+    --glitch-global-fgb: #cc241d;
   }
 
   .wrapper {
