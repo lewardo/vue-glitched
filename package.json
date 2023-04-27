@@ -9,6 +9,7 @@
   "license": "GPL-3.0",
   "homepage": "https://lewardo.github.io/vue-glitched",
   "repository": {
+    "type": "git",
     "url": "https://github.com/lewardo/vue-glitched.git"
   },
   "keywords": [
@@ -31,7 +32,7 @@
       "require": "./dist/vue-glitched.umd.js"
     }
   },
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "dev": "vite",
     "dev-lan": "vite --host",
