@@ -1,19 +1,21 @@
 # Simple Vue 3 text glitching component
 
+![package](https://nodei.co/npm/vue-glitched.png?downloads=true&downloadRank=true&stars=true)
+
+A simple to use, customisable `vue` component to add a glitch effect to text, built with `vite`<sup>[\[1\]](https://t.ly/Ltdz)</sup>
 
 ![build validation](https://github.com/lewardo/vue-glitched/actions/workflows/build-validation.yml/badge.svg)
 ![demo validation](https://github.com/lewardo/vue-glitched/actions/workflows/demo-validation.yml/badge.svg)
 ![demo deployment](https://github.com/lewardo/vue-glitched/actions/workflows/pages/pages-build-deployment/badge.svg)
 
 
-A simple to use, customisable `vue` component to add a glitch effect to text, built with `vite`<sup>[\[1\]](https://t.ly/Ltdz)</sup>
 
-![npm version](https://img.shields.io/npm/v/vue-glitched?style=plastic)
-![github version](https://img.shields.io/npm/v/vue-glitched/latest?label=github&registry_uri=https%3A%2F%2Fnpm.pkg.github.com&style=plastic)
 
 ```bash
-# instal latest component version to project directory
+# install latest component version to project directory
 npm install vue-glitched
+# if using the github npm registry
+npm install @lewardo/vue-glitched
 ```
 ```js
 // global-scope registration
@@ -22,8 +24,6 @@ import { Glitch } from 'vue-glitched'
 
 createApp({}).component('Glitch', Glitch);  
 ```
-
-### 
 ```html
 <!-- component-scope registration -->
 <script>
@@ -60,18 +60,19 @@ export default {
     or synchronise glitching effect with another element (by id)
 </Glitch>
 <Glitch id="stopped" defer>
-    and even not start the effect by default (use exposed `glitch` and `noglitch` methods to control effect)
+    and even not start the effect by default 
+        (use exposed `glitch` and `noglitch` methods to control effect)
 </Glitch>
-<!-- set defaults for glitching colours -->
-<style>
-    :root {
-        --glitch-global-bg: #1d2021;
-        --glitch-global-fg: #ebdbb2;
+```
+```css
+/* set defaults for glitching colours */
+:root {
+    --glitch-global-bg: #1d2021;
+    --glitch-global-fg: #ebdbb2;
 
-        --glitch-global-fga: #076678;
-        --glitch-global-fgb: #cc241d;
-    }
-</style>
+    --glitch-global-fga: #076678;
+    --glitch-global-fgb: #cc241d;
+}
 ```
 ```js
 // required attributes for component to function
@@ -79,10 +80,10 @@ const required_attrs = [ 'id' ]
 
 // default values for props
 const prop_defaults = {
-    fg:  'var(--glitch-global-fg,  black)',
-    bg:  'var(--glitch-global-bg,  white)',
-    fga: 'var(--glitch-global-fga, black)',
-    fgb: 'var(--glitch-global-fgb, black)',
+    fg:  `var(--glitch-global-fg,  #000)`,
+    bg:  `var(--glitch-global-bg,  #fff)`,
+    fga: `var(--glitch-global-fga, ${fg})`,
+    fgb: `var(--glitch-global-fgb, ${fg})`,
     text: {{ slot.$innerText }},
     sync: ''
 }
@@ -99,6 +100,8 @@ const prop_options = [
 ```bash
 # start vite development server
 npm run dev
+# expose development to local network
+npm run dev-lan
 # build library from component
 npm run build
 # build demo site to docs directory
