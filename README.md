@@ -100,9 +100,9 @@ const prop_options = [
 ```bash
 # start vite development server
 npm run dev
-# expose development to local network
+# expose development server to local network
 npm run dev-lan
-# build library from component
+# build component library
 npm run build
 # build demo site to docs directory
 npm run docs
