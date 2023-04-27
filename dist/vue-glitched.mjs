@@ -1,5 +1,5 @@
 /*
- * vue-glitched v0.3.4
+ * vue-glitched v0.3.5
  *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
@@ -16,18 +16,18 @@ const c = (e, i) => {
     t[n] = s;
   return t;
 };
-let a = document.createElement("style"), r = document.createElement("style");
-a.id = "vue-glitch";
-r.id = "glitch-global-style";
-r.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;left:0;overflow:hidden;clip-path:inset(100% 0 0 0)}.glitch::before{transform:translateX(-1px);}.glitch::after{transform:translateX(1px);}";
-document.head.appendChild(a);
-a.appendChild(r);
+let r = document.createElement("style"), a = document.createElement("style");
+r.id = "vue-glitch";
+a.id = "glitch-global-style";
+a.innerHTML = ".glitch{position:relative;overflow:hidden}.glitch::before,.glitch::after{position:absolute;user-select:none;top:0;left:0;overflow:hidden;clip-path:inset(100% 0 0 0)}.glitch::before{transform:translateX(-1px);}.glitch::after{transform:translateX(1px);}";
+document.head.appendChild(r);
+r.appendChild(a);
 const f = {
   data: function() {
     return {
       DOMStyleObject: null,
       DOMKeyframesObject: null,
-      DOMGlobalContainerObject: a
+      DOMGlobalContainerObject: r
     };
   },
   props: {
@@ -48,19 +48,19 @@ const f = {
     },
     bg: {
       type: String,
-      default: "var(--glitch-global-bg, #000)"
+      default: "var(--glitch-global-bg, #fff)"
     },
     fg: {
       type: String,
-      default: "var(--glitch-global-fg, #fff)"
+      default: "var(--glitch-global-fg, #000)"
     },
     fga: {
       type: String,
-      default: "var(--glitch-global-fga, #fff)"
+      default: ""
     },
     fgb: {
       type: String,
-      default: "var(--glitch-global-fgb, #fff)"
+      default: ""
     },
     intense: {
       type: Boolean
@@ -78,6 +78,12 @@ const f = {
   computed: {
     DOMGlitchObject: function() {
       return this.$refs.glitch;
+    },
+    fgAfter: function() {
+      return this.fga ? this.fga : `var(--glitch-global-fga, ${this.fg})`;
+    },
+    fgBefore: function() {
+      return this.fgb ? this.fgb : `var(--glitch-global-fgb, ${this.fg})`;
     },
     steps: function() {
       return this.simple ^ this.complex ? this.simple ? 10 : 50 : 20;
@@ -110,7 +116,7 @@ const f = {
     },
     regurgitateStyling: function() {
       const e = 7.9 + Number.parseFloat(Math.random().toFixed(3)), i = 3.7 + Number.parseFloat(Math.random().toFixed(3)), t = 4.1 + Number.parseFloat(Math.random().toFixed(3));
-      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fgb};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fga};}`;
+      return `#${this.id}.glitching{-webkit-animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation} ${e}s infinite step-end alternate-reverse;}#${this.id}.glitch{color:${this.fg};}#${this.id}.glitching::before{-webkit-animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-before ${i}s infinite step-end alternate-reverse;}#${this.id}.glitch::before{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:-1px 0px ${this.fgBefore};}#${this.id}.glitching::after{-webkit-animation:noise-anim-${this.animation}-after ${t} infinite step-end alternate-reverse;animation:noise-anim-${this.animation}-after ${t}s infinite step-end alternate-reverse;}#${this.id}.glitch::after{content:"${this.content}";color:${this.fg};background:${this.bg};text-shadow:1px 0 ${this.fgAfter};}`;
     },
     appendStyle: function(e, i) {
       const t = document.createElement("style");
@@ -131,7 +137,7 @@ const f = {
     this.glitch !== "" && this.observer.disconnect();
   }
 }, d = ["id"];
-function m(e, i, t, n, s, g) {
+function g(e, i, t, n, s, m) {
   return o(), l("span", {
     id: t.id,
     class: "glitch",
@@ -140,7 +146,7 @@ function m(e, i, t, n, s, g) {
     h(e.$slots, "default")
   ], 8, d);
 }
-const u = /* @__PURE__ */ c(f, [["render", m]]);
+const p = /* @__PURE__ */ c(f, [["render", g]]);
 export {
-  u as Glitch
+  p as Glitch
 };
