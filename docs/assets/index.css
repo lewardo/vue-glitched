@@ -1,5 +1,5 @@
 /*
- * vue-glitched v0.3.4
+ * vue-glitched v0.3.5
  *
  * Copyright (c) 2023 lewardo (https://github.com/lewardo)
  * SPDX-License-Identifier: GPL-3.0+                                  
@@ -9,4 +9,4 @@
  *   \_/|___|___|   |_  |_|_|_| |___|_|_|___|___|
  *                  |___|                        
  */
-:root{--doc-height: 100%}body{margin:0;padding:0;width:100vw;height:100vh;height:var(--doc-height);position:fixed;top:0;left:0;overflow:hidden;box-sizing:border-box;place-items:center;display:grid;background:#1d2021;--glitch-global-bg: #1d2021;--glitch-global-fg: #ebdbb2}.wrapper{display:flex;flex-direction:column;align-items:center}.paragraph{display:flex;flex-wrap:wrap;justify-content:center}.glitch{font-family:monospace}#glitchy{font-size:min(48px,4vmax);text-align:center;margin:5vh 5vw}#intense,#colourful,#alternate{font-size:min(24px,2vmax)}#colourful,#alternate{display:inline-block}a,a:visited{margin:2vmax;font-family:monospace;font-size:min(20px,2vmax);color:#928374;text-decoration:none;position:absolute;bottom:0;right:0}
+:root{--doc-height: 100%}body{margin:0;padding:0;width:100vw;height:100vh;height:var(--doc-height);position:fixed;top:0;left:0;overflow:hidden;box-sizing:border-box;place-items:center;display:grid;background:#1d2021;--glitch-global-bg: #1d2021;--glitch-global-fg: #ebdbb2;--glitch-global-fga: #076678;--glitch-global-fgb: #cc241d}.wrapper{display:flex;flex-direction:column;align-items:center}.paragraph{display:flex;flex-wrap:wrap;justify-content:center}.glitch{font-family:monospace}#glitchy{font-size:min(48px,4vmax);text-align:center;margin:5vh 5vw}#intense,#colourful,#alternate{font-size:min(24px,2vmax)}#colourful,#alternate{display:inline-block}a,a:visited{margin:2vmax;font-family:monospace;font-size:min(20px,2vmax);color:#928374;text-decoration:none;position:absolute;bottom:0;right:0}
